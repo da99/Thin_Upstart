@@ -12,6 +12,7 @@ h = Hash[
   :apps =>  "Path to dir containing apps.",
   :templates =>  "File glob for templates: e.g. \"./templates/*.conf\"", 
   :output =>  "Output directory.",
+  :kv     =>  %@ Additional values for Mustache: e.g. --kv " k1 => v1 , k2 => v2 " @,
   :trash  =>  "Dir to trash. All other arguments are ignored."
 ]
 
@@ -21,18 +22,36 @@ opts = Trollop::options do
   }
 end
 
+def string_to_hash orig
+  temp = orig.split(',').map { |pair| pair.split("=>") }
+  unless temp.map { |pair| pair.size }.uniq == [2]
+    raise ArgumentError, "Invalid format for hash: #{orig}"
+  end
+
+  temp.inject(Hash[]) { |memo, pair| 
+    memo[pair.first.strip] = pair.last.strip
+    memo 
+  }
+end # ==== string_to_hash
+
 if opts[:trash_given]
+  
   files = Thin_Upstart.trash opts[:trash]
   files.each { |f|
     puts "deleted: #{f}"
   }
+  
 else
+  
   files = Thin_Upstart { |o|
     h.each { |k, desc|
+
+      (opts[k] = string_to_hash(opts[k])) if [ :kv, 'kv' ].include?(k)
       o.send(k, opts[k]) if opts[k]
     }
   }
-   files.each { |f|
-     puts "created: #{f}"
-   }
+  
+  files.each { |f|
+    puts "created: #{f}"
+  }
 end

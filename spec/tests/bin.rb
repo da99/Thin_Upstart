@@ -58,6 +58,13 @@ describe "bin: Thin_Upstart" do
       should_mustache "name", "My-Apps", "new-upstart/My-Apps-Hi.conf"
     }
   end
+
+  it "accepts --kv" do
+    chdir {
+      bin %@ --templates templates/custom/*.conf --kv " custom_1 => 1 , custom_2 => c2"@
+      should_mustache "custom_2", "c2", "upstart/custom.conf"
+    }
+  end
   
 end # === bin: Thin_Upstart
 
