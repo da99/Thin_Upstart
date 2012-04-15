@@ -21,7 +21,7 @@ class Thin_Upstart
         Exit_Zero "#{cmd} #{file}"
       }
 
-      trash
+      files.sort
     end
     
   end # === Class_Methods
@@ -47,6 +47,8 @@ class Thin_Upstart
   def write
     app_list = []
     dirs = Dir.glob(File.join apps, "/*")
+    
+    final = []
     
     tmpls = Dir.glob(templates)
     raise ArgumentError, "No templates found in: #{templates}" if tmpls.empty?
@@ -79,13 +81,14 @@ class Thin_Upstart
         content   = Mustache.render(tmpl_content, vals)
         
         File.write( final_path, content )
+        final << final_path
       }
       
     }
 
     raise(ArgumentError, "No apps found in: #{apps}") if app_list.empty?
 
-    app_list
+    final.uniq.sort
   end
 
   def set_or_get attr, val = :RETURN

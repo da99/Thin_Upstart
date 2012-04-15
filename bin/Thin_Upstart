@@ -11,7 +11,8 @@ h = Hash[
   :yml =>   ".yml config file path relative to app dir.: \"config/thin.yml\"", 
   :apps =>  "Path to dir containing apps.",
   :templates =>  "File glob for templates: e.g. \"./templates/*.conf\"", 
-  :output =>  "Output directory."
+  :output =>  "Output directory.",
+  :trash  =>  "Dir to trash. All other arguments are ignored."
 ]
 
 opts = Trollop::options do
@@ -20,9 +21,18 @@ opts = Trollop::options do
   }
 end
 
-
-Thin_Upstart { |o|
-  h.each { |k, desc|
-    o.send(k, opts[k]) if opts[k]
+if opts[:trash_given]
+  files = Thin_Upstart.trash opts[:trash]
+  files.each { |f|
+    puts "deleted: #{f}"
   }
-}
+else
+  files = Thin_Upstart { |o|
+    h.each { |k, desc|
+      o.send(k, opts[k]) if opts[k]
+    }
+  }
+   files.each { |f|
+     puts "created: #{f}"
+   }
+end
