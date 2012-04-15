@@ -90,6 +90,7 @@ In your Mustache templates, you have access to the following values:
 * **app\_path:**  Full path to app.
 * **yml\_path:**  Full path to .yml file.
 * **apps\_dir:**  Full path to directory of apps.
+* **your custom values:**  Use method :kv with an argument of a hash.
 
 You can use Mustache values in the file names of the templates. 
 For example:
