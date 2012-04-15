@@ -98,11 +98,6 @@ For example:
 * my/template/dir/**{{name}}**.conf         
 * my/template/dir/**{{name}}**-**{{app}}**.conf
 
-The files generated are:
-
-* my/template/dir/My-Apps.conf         
-* my/template/dir/My-Apps-Hi.conf
-
 Run Tests
 ---------
 
