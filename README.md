@@ -59,14 +59,27 @@ Usage: Shell
       --templates  ./templates
       --yml        config/thin.yml
       --output     ./output
+      --kv         " custom_1 => val_1 , custom_2 => val_2 , ... "
       --trash      my/conf/dir  # When used, all other options are ignored.
       --help 
 
-*Note:* Be sure to use quotation marks when using file globs:
+**Note:** Be sure to use quotation marks when using file globs or --kv:
 
     Thin_Upstart --templates "template/*.conf"
     Thin_Upstart --yml       "config/*.yml"
+    Thin_Upstart --kv        " custom_1 => val_1 , custom_2 => val_2 , ... "
 
+When using the --kv option on the shell, you are limited to using the above format. 
+This means you can put any values using commas:
+
+    Thin_Upstart --kv " custom_1 => val 1 , custom_2 => val 2 "
+    
+    # This hash is generated based on the above line:
+    # { 
+    #    'custom_1' => "val 1", 
+    #    'custom_2' => 'val 2'
+    # }
+    
 Usage: Mustache Template
 -----
 In your Mustache templates, you have access to the following values:
