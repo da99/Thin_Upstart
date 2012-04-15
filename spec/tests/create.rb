@@ -18,6 +18,15 @@ describe "Thin_Upstart create" do
       }
     }
   end
+
+  it "raise ArgumentError if no templates are found." do
+    chdir {
+      lambda {
+        Thin_Upstart { |o| o.templates "ignored" }
+      }.should.raise(ArgumentError)
+      .message.should.match %r!No templates found: #{`pwd`.strip}/ignored!
+    }
+  end
   
 end # === Thin_Upstart create
 

@@ -45,7 +45,10 @@ class Thin_Upstart
         :apps_dir => File.expand_path(apps)
       ]
       
-      Dir.glob(templates).each { |file|
+      tmpls = Dir.glob(templates)
+      raise ArgumentError, "No templates found: #{templates}" if tmpls.empty?
+      
+      tmpls.each { |file|
         temp_path = Mustache.render(file, vals)
         file_name = File.basename(temp_path)
         final_path= File.join(output, file_name)
