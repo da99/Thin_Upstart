@@ -70,18 +70,18 @@ Usage: Mustache Template
 -----
 In your Mustache templates, you have access to the following values:
 
-* *name:*       Name of app group: e.g. My-Web-Apps
-* *apps\_dir:*  Full path to directory of apps.
-* *app:*        Name of current app: e.g. Blog
-* *app\_path:*  Full path to app.
-* *yml:*        Relative path from current app directory to .yml file
-* *yml\_path:*  Full path to app directory.
+* **name:**       Name of app group: e.g. My-Web-Apps
+* **app:**        Name of current app: e.g. Blog
+* **yml:**        Relative path from current app directory to .yml file
+* **app\_path:**  Full path to app.
+* **yml\_path:**  Full path to .yml file.
+* **apps\_dir:**  Full path to directory of apps.
 
 You can use Mustache values in the file names of the templates. 
 For example:
 
-* my/template/dir/*{{name}}*.conf         
-* my/template/dir/*{{name}}*-*{{app}}*.conf
+* my/template/dir/**{{name}}**.conf         
+* my/template/dir/**{{name}}**-**{{app}}**.conf
 
 The files are generated are:
 
