@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+# -*- ruby -*-
+# 
+
+
+require "trollop"
+require "Thin_Upstart"
+

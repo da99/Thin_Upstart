@@ -8,9 +8,12 @@ Gem::Specification.new do |s|
   s.version     = Thin_Upstart::VERSION
   s.authors     = ["da99"]
   s.email       = ["i-hate-spam-45671204@mailinator.com"]
-  s.homepage    = "https://github.com/da99/#Thin_Upstart"
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "https://github.com/da99/Thin_Upstart"
+  s.summary     = %q{Generate Upstart conf files for your Thin apps.}
+  s.description = %q{
+    Generates Upstart conf files for your Thin apps.
+    Uses Mustache templates for customization.
+  }
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
@@ -21,7 +24,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_development_dependency 'Bacon_Colored'
   s.add_development_dependency 'pry'
+  s.add_development_dependency 'Exit_Zero'
   
   # Specify any dependencies here; for example:
-  # s.add_runtime_dependency 'rest-client'
+  s.add_runtime_dependency 'mustache'
+  s.add_runtime_dependency 'trollop'
 end
