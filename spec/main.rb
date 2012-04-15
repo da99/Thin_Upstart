@@ -51,6 +51,41 @@ def chdir
   Dir.chdir(D) { yield }
 end
 
+def bin args
+  chdir {
+    Exit_Zero "Thin_Upstart #{args}"
+  }
+end
+
+module Bacon
+  class Context
+    
+    def should_mustache name, val, file = nil
+      file ||= "upstart/#{@name}-Hi.conf"
+      target = %r!#{name}: #{val}$!
+      File.read(file)[target].should.match target
+    end
+
+    def generate name
+      chdir {
+        @name = name
+        generate!(name) unless File.file?("upstart/#{@name}.conf")
+      }
+    end
+
+    def generate! name
+      @name = name
+      chdir { 
+        reset
+        Thin_Upstart { |o| o.name @name }
+      }
+    end
+    
+    
+    
+  end # === Context
+end # === Bacon
+
 # ======== Include the tests.
 if ARGV.size > 1 && ARGV[1, ARGV.size - 1].detect { |a| File.exists?(a) }
   # Do nothing. Bacon grabs the file.

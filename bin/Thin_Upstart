@@ -6,3 +6,23 @@
 require "trollop"
 require "Thin_Upstart"
 
+h = Hash[
+  :name =>  "Name for Upstart service.", 
+  :yml =>   ".yml config file path relative to app dir.: \"config/thin.yml\"", 
+  :apps =>  "Path to dir containing apps.",
+  :templates =>  "File glob for templates: e.g. \"./templates/*.conf\"", 
+  :output =>  "Output directory."
+]
+
+opts = Trollop::options do
+  h.each { |k,v|
+    opt k, v, :type=>String
+  }
+end
+
+
+Thin_Upstart { |o|
+  h.each { |k, desc|
+    o.send(k, opts[k]) if opts[k]
+  }
+}

@@ -38,7 +38,7 @@ Usage: Ruby
       o.apps      "./apps"
       o.templates "./templates/*.conf" # file glob     
       o.output    "./upstart"        
-      o.yml       "config/thin.yml"    # file glob 
+      o.yml       "config/thin.yml"  
     }
 
 Usage: Shell
@@ -48,9 +48,15 @@ Usage: Shell
       --name       web-apps 
       --apps       ./apps
       --templates  ./templates
-      --yml_glob   config/thin.yml
+      --yml        config/thin.yml
       --output     ./output
- 
+      --help
+
+*Note:* Be sure to use quotation marks when using file globs:
+
+    Thin_Upstart --templates "template/*.conf"
+    Thin_Upstart --yml       "config/*.yml"
+
 Usage: Mustache Template
 -----
 In your Mustache templates, you have access to the following values:

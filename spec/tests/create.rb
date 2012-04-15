@@ -1,15 +1,4 @@
 
-module Bacon
-  class Context
-    
-    def should_mustache name, val, file = "upstart/my-apps-Hi.conf"
-      target = %r!#{name}: #{val}$!
-      File.read(file)[target].should.match target
-    end
-    
-  end # === Context
-end # === Bacon
-
 describe "Thin_Upstart create" do
   
   before { reset }
@@ -34,14 +23,7 @@ end # === Thin_Upstart create
 
 describe "Thin_Upstart Mustache values" do
   
-  before {
-    chdir { 
-      if !File.file?("upstart/my-apps.conf")
-        reset
-        Thin_Upstart { |o| o.name "my-apps" }
-      end
-    }
-  }
+  before { generate 'my-apps' }
 
   it "sets: {{name}}" do
     chdir { should_mustache 'name', "my-apps" }
