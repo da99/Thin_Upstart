@@ -24,10 +24,19 @@ describe "Thin_Upstart create" do
       lambda {
         Thin_Upstart { |o| o.templates "ignored" }
       }.should.raise(ArgumentError)
-      .message.should.match %r!No templates found: #{`pwd`.strip}/ignored!
+      .message.should.match %r!No templates found in: #{`pwd`.strip}/ignored!
     }
   end
   
+  it "raises ArgumentError if no apps are found." do
+    chdir {
+      lambda {
+        Thin_Upstart { |o| o.apps "./ignored" }
+      }.should.raise(ArgumentError)
+      .message.should.match %r!No apps found in: #{`pwd`.strip}/ignored!
+    }
+  end
+
 end # === Thin_Upstart create
 
 describe "Thin_Upstart Mustache values" do

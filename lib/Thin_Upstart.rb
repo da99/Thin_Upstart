@@ -26,7 +26,9 @@ class Thin_Upstart
   end
 
   def write
-    Dir.glob(File.join apps, "/*").each { |raw_app|
+    dirs = Dir.glob(File.join apps, "/*")
+    raise ArgumentError, "No apps found in: #{apps}" if dirs.empty?
+    dirs.each { |raw_app|
       app      = File.basename(raw_app)
       app_path = File.expand_path(raw_app)
       
@@ -46,7 +48,7 @@ class Thin_Upstart
       ]
       
       tmpls = Dir.glob(templates)
-      raise ArgumentError, "No templates found: #{templates}" if tmpls.empty?
+      raise ArgumentError, "No templates found in: #{templates}" if tmpls.empty?
       
       tmpls.each { |file|
         temp_path = Mustache.render(file, vals)
