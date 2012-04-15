@@ -29,11 +29,14 @@ describe "Thin_Upstart create" do
   end
   
   it "raises ArgumentError if no apps are found." do
+    target = File.expand_path("#{D}/..") 
     chdir {
       lambda {
-        Thin_Upstart { |o| o.apps "./ignored" }
+        Thin_Upstart { |o| 
+          o.apps target
+        }
       }.should.raise(ArgumentError)
-      .message.should.match %r!No apps found in: #{`pwd`.strip}/ignored!
+      .message.should.match %r!No apps found in: #{target}!
     }
   end
 

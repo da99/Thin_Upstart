@@ -26,8 +26,12 @@ class Thin_Upstart
   end
 
   def write
+    app_list = []
     dirs = Dir.glob(File.join apps, "/*")
-    raise ArgumentError, "No apps found in: #{apps}" if dirs.empty?
+    
+    tmpls = Dir.glob(templates)
+    raise ArgumentError, "No templates found in: #{templates}" if tmpls.empty?
+    
     dirs.each { |raw_app|
       app      = File.basename(raw_app)
       app_path = File.expand_path(raw_app)
@@ -35,6 +39,7 @@ class Thin_Upstart
 
       yml_path = Dir.glob(File.join app_path, yml).first
       next unless yml_path
+      app_list << app
     
       yml = yml_path.sub( File.join(app_path, '/'), '')
       
@@ -47,9 +52,6 @@ class Thin_Upstart
         :apps_dir => File.expand_path(apps)
       ]
       
-      tmpls = Dir.glob(templates)
-      raise ArgumentError, "No templates found in: #{templates}" if tmpls.empty?
-      
       tmpls.each { |file|
         temp_path = Mustache.render(file, vals)
         file_name = File.basename(temp_path)
@@ -58,7 +60,12 @@ class Thin_Upstart
         
         File.write( final_path, content )
       }
+      
     }
+
+    raise(ArgumentError, "No apps found in: #{apps}") if app_list.empty?
+
+    app_list
   end
 
   def set_or_get attr, val = :RETURN
