@@ -37,6 +37,16 @@ describe "Thin_Upstart create" do
     }
   end
 
+  it "ignores app with no .yml file" do
+    name = "Ignored"
+    chdir {
+      `mkdir apps/#{name}`
+      Thin_Upstart
+      Dir.glob("upstart/*").detect { |f| f[name] }
+      .should ==  nil
+    }
+  end
+
 end # === Thin_Upstart create
 
 describe "Thin_Upstart Mustache values" do
