@@ -39,6 +39,18 @@ describe "Thin_Upstart Mustache values" do
     }
   end
 
+  it "raises error if Mustache templates uses unknown value" do
+    chdir { 
+      lambda do
+        Thin_Upstart { |o|
+          o.name 'my-apps'
+          o.templates 'templates/missing/*.conf'
+        }
+      end.should.raise(Mustache::ContextMiss)
+      .message.should.match %r!Can't find custom_123 in !
+    }
+  end
+
 end # === Thin_Upstart Mustache values
 
 

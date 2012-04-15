@@ -2,6 +2,8 @@ require 'Thin_Upstart/version'
 require 'Exit_Zero'
 require 'mustache'
 
+Mustache.raise_on_context_miss = true
+
 def Thin_Upstart
   o = Thin_Upstart.new
   yield o
