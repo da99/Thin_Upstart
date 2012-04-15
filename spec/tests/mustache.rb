@@ -27,6 +27,18 @@ describe "Thin_Upstart Mustache values" do
     chdir { should_mustache 'apps_dir', File.expand_path("./apps") }
   end
   
+  it "sets custom values" do
+    chdir { 
+      Thin_Upstart { |o|
+        o.name 'my-apps'
+        o.templates 'templates/custom/*.conf'
+        o.kv   :custom_1=>"1", :custom_2=>"2"
+      }
+      should_mustache 'custom_1', '1', "upstart/custom.conf"
+      should_mustache 'custom_2', '2', "upstart/custom.conf"
+    }
+  end
+
 end # === Thin_Upstart Mustache values
 
 

@@ -34,6 +34,7 @@ class Thin_Upstart
     templates "./templates/*.conf"
     output    "./upstart"
     yml       "thin.yml"
+    kv        Hash[]
     yield(self) if block_given?
   end
 
@@ -63,7 +64,7 @@ class Thin_Upstart
       app_list << app
     
       yml = yml_path.sub( File.join(app_path, '/'), '')
-      
+
       vals = remove_last_slash Hash[ 
         :name => name, 
         :app  => app, 
@@ -71,7 +72,7 @@ class Thin_Upstart
         :yml  => yml,
         :yml_path => yml_path,
         :apps_dir => File.expand_path(apps)
-      ]
+      ].merge(kv || {} )
       
       tmpls.each { |file|
         temp_path = Mustache.render(file, vals)
@@ -99,7 +100,7 @@ class Thin_Upstart
     end
   end
 
-  %w{ name yml }.each { |attr|
+  %w{ name yml kv }.each { |attr|
   
     eval %~
       def #{attr} *args
