@@ -24,9 +24,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_development_dependency 'Bacon_Colored'
   s.add_development_dependency 'pry'
-  s.add_development_dependency 'Exit_Zero'
   
   # Specify any dependencies here; for example:
   s.add_runtime_dependency 'mustache'
   s.add_runtime_dependency 'trollop'
+  s.add_runtime_dependency 'Exit_Zero'
 end

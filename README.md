@@ -34,11 +34,11 @@ Usage: Ruby
     require "Thin_Upstart"
     
     Thin_Upstart { |o|
-      o.name "web-apps"
-      o.apps "./"
-      o.templates "./templates"     
-      o.output    "./output"        
-      o.yml       "config/thin.yml" # file glob 
+      o.name      "web-apps"
+      o.apps      "./apps"
+      o.templates "./templates/*.conf" # file glob     
+      o.output    "./upstart"        
+      o.yml       "config/thin.yml"    # file glob 
     }
 
 Usage: Shell
@@ -46,11 +46,23 @@ Usage: Shell
 
     Thin_Upstart 
       --name       web-apps 
-      --apps       ./ 
+      --apps       ./apps
       --templates  ./templates
       --yml_glob   config/thin.yml
       --output     ./output
  
+Usage: Mustache Template
+-----
+In your Mustache templates, you have access to the following values:
+
+* name:       Name of app group: e.g. My-Web-Apps
+* apps\_dir:  Full path to directory of apps.
+* app:        Name of current app: e.g. Blog
+* app\_path:  Full path to app.
+* yml:        Relative path from current app directory to .yml file
+* yml\_path:  Full path to app directory.
+
+
 Run Tests
 ---------
 
