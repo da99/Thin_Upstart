@@ -45,9 +45,10 @@ else
   
   files = Thin_Upstart { |o|
     h.each { |k, desc|
+      next unless opts[:"#{k}_given"]
 
       (opts[k] = string_to_hash(opts[k])) if [ :kv, 'kv' ].include?(k)
-      o.send(k, opts[k]) if opts[k]
+      o.send(k, opts[k])
     }
   }
   
