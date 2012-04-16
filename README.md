@@ -22,6 +22,12 @@ are generated (assuming you call your group of Thin apps 'web-app'):
       |- web-apps-app2.conf
       |- ...
 
+Tip
+---
+
+Check the format of your Upstart files when you copy them to /etc/init using this command:
+
+    sudo initctl check-config --warn App-Name
 
 Installation
 ------------
