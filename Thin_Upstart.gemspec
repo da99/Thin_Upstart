@@ -28,5 +28,5 @@ Gem::Specification.new do |s|
   # Specify any dependencies here; for example:
   s.add_runtime_dependency 'mustache'
   s.add_runtime_dependency 'trollop'
-  s.add_runtime_dependency 'Exit_Zero'
+  s.add_runtime_dependency 'Exit_0'
 end

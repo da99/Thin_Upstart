@@ -3,14 +3,14 @@ require File.expand_path('spec/helper')
 require 'Thin_Upstart'
 require 'Bacon_Colored'
 require 'pry'
-require 'Exit_Zero'
+require 'Exit_0'
 
 D = "/tmp/Thin_Upstart"
 
 def Multi_0 str
   str.strip.split("\n").each { |o|
     next if o.strip.empty?
-    Exit_Zero o
+    Exit_0 o
   }
 end
 
@@ -53,7 +53,7 @@ end
 
 def bin args
   chdir {
-    Exit_Zero "Thin_Upstart #{args}"
+    Exit_0 "Thin_Upstart #{args}"
   }
 end
 

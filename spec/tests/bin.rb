@@ -37,7 +37,7 @@ describe "bin: Thin_Upstart" do
 
   it "accepts --apps" do
     chdir {
-      Exit_Zero "cp -r apps new-apps"
+      Exit_0 "cp -r apps new-apps"
       bin "--apps new-apps"
       should_mustache "apps_dir", File.expand_path("new-apps"), "upstart/My-Apps-Hi.conf"
     }
@@ -45,7 +45,7 @@ describe "bin: Thin_Upstart" do
 
   it "accepts --templates" do
     chdir {
-      Exit_Zero "cp -r templates new-templates"
+      Exit_0 "cp -r templates new-templates"
       bin "--templates \"new-templates/*.conf\""
       should_mustache "app", "Hi", "upstart/My-Apps-Hi.conf"
     }
@@ -53,7 +53,7 @@ describe "bin: Thin_Upstart" do
 
   it "accepts --output" do
     chdir {
-      Exit_Zero "mkdir new-upstart"
+      Exit_0 "mkdir new-upstart"
       bin "--output new-upstart"
       should_mustache "name", "My-Apps", "new-upstart/My-Apps-Hi.conf"
     }
